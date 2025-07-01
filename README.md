@@ -110,4 +110,24 @@ You now have:
 * Add Docker support for containerization.
 * Add unit tests with `testing` and `httptest`.
 
+※ I had development window version
+
+
+### database most popular
+* PostgreSQL
+* MySQL
+* SQLite
+* MariaDB Server
+
+
+
+### Reference Link
+
+
+```bash
+
+https://zenn.dev/kurusugawa/articles/golang-env-lib
+
+```
+
 ---
