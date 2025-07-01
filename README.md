@@ -1,6 +1,6 @@
 
 ### start golang
-# macOS with Homebrew
+#### macOS with Homebrew
 brew install go
 
 # window
