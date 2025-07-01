@@ -121,13 +121,27 @@ You now have:
 
 
 
-### Reference Link
+### Folder sturcture description
 
 
 ```bash
 
-https://zenn.dev/kurusugawa/articles/golang-env-lib
+* handlers/ - HTTP request handlers
+* models/ - Data structures
+* storage/ - Data persistence layer
+* middleware/ - Reusable middleware
+* routes/ - Route definitions
 
 ```
+
+```bash
+
+* go mod init your-api  (use your project name)
+* go mod tidy (download dependencies)
+* go run main.go ( start the server)
+
+
+```
+
 
 ---
