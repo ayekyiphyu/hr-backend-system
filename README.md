@@ -1,23 +1,25 @@
-# Product Structure
+
+### start golang
+# macOS with Homebrew
+brew install go
+
+# window
+sudo apt install golang-go
 
 
-project
-├── cmd                    # Command-related files
-│   └── app                # Application entry point
-│       └── main.go        # Main application logic
-├── internal               # Internal codebase
-│   ├── user               # Domain 'user'
-│   │   ├── handler.go     # User-specific handler
-│   │   ├── service.go     # User-specific service
-│   │   ├── repository.go  # User-specific repository
-│   │   └── user.go        # User model
-│   └── product            # Domain 'product'
-│       ├── handler.go     # Product-specific handler
-│       ├── service.go     # Product-specific service
-│       └── repository.go  # Product-specific repository
-├── pkg/                   # Shared utilities or helpers
-│   └── logger.go          # Logging utilities
-├── configs/               # Configuration files (YAML, JSON, etc.)
-│   └── config.yaml
-├── go.mod                 # Go module definition
-└── go.sum                 # Go module checksum file
+# check go version
+go version
+
+
+
+## Create Go Project
+mkdir "project_name"
+cd p project_name
+go mod init my-rest-api
+
+## Recommend install Gin Framework
+
+go get github.com/gin-gonic/gin
+go get github.com/gin-contrib/cors  # For CORS support
+
+## Create a Complete REST API
