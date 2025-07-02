@@ -7,9 +7,14 @@ type User struct {
 	ID        int       `json:"id"`
 	Name      string    `json:"name" binding:"required"`
 	Email     string    `json:"email" binding:"required,email"`
-	Age       int       `json:"age" binding:"min=1,max=120"`
 	CreatedAt time.Time `json:"created_at"`
 	UpdatedAt time.Time `json:"updated_at"`
+}
+
+type GetUserRequest struct {
+	Name        string `json:"name" example:"John" binding:"required" `
+	Email       string `json:"emil" example:"john@example.com" binding:"required"`
+	PhoneNumber string `json:"phone_number" example:"080-1234-5678" binding:"required"`
 }
 
 // CreateUserRequest for creating users

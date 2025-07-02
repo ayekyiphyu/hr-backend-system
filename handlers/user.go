@@ -71,7 +71,6 @@ func CreateUser(c *gin.Context) {
 		ID:        storage.GetNextUserID(),
 		Name:      req.Name,
 		Email:     req.Email,
-		Age:       req.Age,
 		CreatedAt: time.Now(),
 		UpdatedAt: time.Now(),
 	}
@@ -163,9 +162,7 @@ func UpdateUser(c *gin.Context) {
 		}
 		user.Email = req.Email
 	}
-	if req.Age > 0 {
-		user.Age = req.Age
-	}
+
 	user.UpdatedAt = time.Now()
 
 	storage.UpdateUser(id, user)
