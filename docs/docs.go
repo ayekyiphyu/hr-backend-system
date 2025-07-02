@@ -292,11 +292,14 @@ const docTemplate = `{
                 "type": {
                     "type": "string",
                     "enum": [
-                        "admin-staff",
-                        "organization",
-                        "jobseeker"
+                        "viewer",
+                        "operator",
+                        "admin",
+                        "owner",
+                        "jobseeker",
+                        "organization"
                     ],
-                    "example": "jobseeker"
+                    "example": "viewer"
                 }
             }
         },
@@ -322,11 +325,14 @@ const docTemplate = `{
                 "type": {
                     "type": "string",
                     "enum": [
-                        "admin-staff",
-                        "organization",
-                        "jobseeker"
+                        "viewer",
+                        "operator",
+                        "admin",
+                        "owner",
+                        "jobseeker",
+                        "organization"
                     ],
-                    "example": "organization"
+                    "example": "operator"
                 }
             }
         }

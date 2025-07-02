@@ -1,4 +1,3 @@
-go mod tidy
 definitions:
   models.APIResponse:
     properties:
@@ -27,10 +26,13 @@ definitions:
         type: string
       type:
         enum:
-        - admin-staff
-        - organization
+        - viewer
+        - operator
+        - admin
+        - owner
         - jobseeker
-        example: jobseeker
+        - organization
+        example: viewer
         type: string
     required:
     - email
@@ -55,10 +57,13 @@ definitions:
         type: string
       type:
         enum:
-        - admin-staff
-        - organization
+        - viewer
+        - operator
+        - admin
+        - owner
         - jobseeker
-        example: organization
+        - organization
+        example: operator
         type: string
     type: object
 info:

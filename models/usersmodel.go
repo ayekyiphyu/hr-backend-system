@@ -2,6 +2,16 @@ package models
 
 import "time"
 
+// User role constants
+const (
+	UserTypeViewer       = "viewer"       // Read-only access
+	UserTypeOperator     = "operator"     // Basic CRUD operations
+	UserTypeAdmin        = "admin"        // Full system access except ownership transfer
+	UserTypeOwner        = "owner"        // Complete system control
+	UserTypeJobSeeker    = "jobseeker"    // Job seekers/applicants
+	UserTypeOrganization = "organization" // Company/employer accounts
+)
+
 // User represents a user in our system
 type User struct {
 	ID        int       `json:"id" example:"1"`
@@ -23,7 +33,7 @@ type LoginRequest struct {
 type CreateUserRequest struct {
 	Name     string `json:"name" binding:"required,min=2,max=100" example:"John Doe"`
 	Email    string `json:"email" binding:"required,email" example:"john@example.com"`
-	Type     string `json:"type" binding:"required,oneof=admin-staff organization jobseeker" example:"jobseeker"`
+	Type     string `json:"type" binding:"required,oneof=viewer operator admin owner jobseeker organization" example:"viewer"`
 	Password string `json:"password" binding:"required,min=8,max=128" example:"securepassword123"`
 }
 
@@ -31,7 +41,7 @@ type CreateUserRequest struct {
 type UpdateUserRequest struct {
 	Name     string `json:"name,omitempty" binding:"omitempty,min=2,max=100" example:"Jane Doe"`
 	Email    string `json:"email,omitempty" binding:"omitempty,email" example:"jane@example.com"`
-	Type     string `json:"type,omitempty" binding:"omitempty,oneof=admin-staff organization jobseeker" example:"organization"`
+	Type     string `json:"type,omitempty" binding:"omitempty,oneof=viewer operator admin owner jobseeker organization" example:"operator"`
 	Password string `json:"password,omitempty" binding:"omitempty,min=8,max=128" example:"newsecurepassword456"`
 }
 
@@ -40,7 +50,7 @@ type RegisterRequest struct {
 	Name        string `json:"name" binding:"required,min=2,max=100" example:"John Doe"`
 	Email       string `json:"email" binding:"required,email" example:"john@example.com"`
 	PhoneNumber string `json:"phone_number" binding:"required,min=10,max=15" example:"080-1234-5678"`
-	Type        string `json:"type" binding:"required,oneof=admin-staff organization jobseeker" example:"jobseeker"`
+	Type        string `json:"type" binding:"required,oneof=admin-staff organization jobseeker staffs" example:"jobseeker"`
 	Password    string `json:"password" binding:"required,min=8,max=128" example:"securepassword123"`
 }
 
@@ -86,4 +96,27 @@ func (u *User) ToResponse() UserResponse {
 		CreatedAt: u.CreatedAt,
 		UpdatedAt: u.UpdatedAt,
 	}
+}
+
+// Helper methods for role checking
+func (u *User) IsViewer() bool       { return u.Type == UserTypeViewer }
+func (u *User) IsOperator() bool     { return u.Type == UserTypeOperator }
+func (u *User) IsAdmin() bool        { return u.Type == UserTypeAdmin }
+func (u *User) IsOwner() bool        { return u.Type == UserTypeOwner }
+func (u *User) IsJobSeeker() bool    { return u.Type == UserTypeJobSeeker }
+func (u *User) IsOrganization() bool { return u.Type == UserTypeOrganization }
+
+// Check if user has administrative privileges
+func (u *User) HasAdminAccess() bool {
+	return u.Type == UserTypeAdmin || u.Type == UserTypeOwner
+}
+
+// Check if user can perform write operations
+func (u *User) CanWrite() bool {
+	return u.Type == UserTypeOperator || u.Type == UserTypeAdmin || u.Type == UserTypeOwner
+}
+
+// Check if user can only read
+func (u *User) IsReadOnly() bool {
+	return u.Type == UserTypeViewer
 }
