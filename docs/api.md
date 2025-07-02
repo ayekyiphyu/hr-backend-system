@@ -16,8 +16,8 @@
 
 ```
 
-
-# how to install swag in GO
+### step by step swag in GO
+# how to install swag
 
 ```bash
 * go install github.com/swaggo/swag/cmd/swag@latest
@@ -31,4 +31,16 @@
 # how to add bash in swag
 ```bash
  export PATH=$PATH:$(go env GOPATH)/bin
+
+ * out will be docs.go
+ * swagger.json
+ * swagger.yaml
+
+※plese check main.go file inside setting.
+
+```
+
+```bash
+*   go run main.go
+*   http://localhost:8080/swagger/index.html
 ```

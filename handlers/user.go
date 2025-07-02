@@ -10,7 +10,17 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-// GetUsers gets all users with pagination
+// GetUsers godoc
+// @Summary Get all users with pagination
+// @Description Retrieve a paginated list of users
+// @Tags users
+// @Accept json
+// @Produce json
+// @Param page query int false "Page number" default(1)
+// @Param limit query int false "Items per page" default(10)
+// @Success 200 {object} models.APIResponse
+// @Failure 400 {object} models.APIResponse
+// @Router /users [get]
 func GetUsers(c *gin.Context) {
 	page, _ := strconv.Atoi(c.DefaultQuery("page", "1"))
 	limit, _ := strconv.Atoi(c.DefaultQuery("limit", "10"))
@@ -44,7 +54,17 @@ func GetUsers(c *gin.Context) {
 	})
 }
 
-// CreateUser creates a new user
+// CreateUser godoc
+// @Summary Create a new user
+// @Description Create a new user with name and email
+// @Tags users
+// @Accept json
+// @Produce json
+// @Param user body models.CreateUserRequest true "User creation request"
+// @Success 201 {object} models.APIResponse
+// @Failure 400 {object} models.APIResponse
+// @Failure 409 {object} models.APIResponse
+// @Router /users [post]
 func CreateUser(c *gin.Context) {
 	var req models.CreateUserRequest
 
@@ -57,7 +77,6 @@ func CreateUser(c *gin.Context) {
 		return
 	}
 
-	// Check if email already exists
 	if _, exists := storage.GetUserByEmail(req.Email); exists {
 		c.JSON(http.StatusConflict, models.APIResponse{
 			Success: false,
@@ -84,7 +103,17 @@ func CreateUser(c *gin.Context) {
 	})
 }
 
-// GetUserByID gets a user by ID
+// GetUserByID godoc
+// @Summary Get a user by ID
+// @Description Retrieve a user by their unique ID
+// @Tags users
+// @Accept json
+// @Produce json
+// @Param id path int true "User ID"
+// @Success 200 {object} models.APIResponse
+// @Failure 400 {object} models.APIResponse
+// @Failure 404 {object} models.APIResponse
+// @Router /users/{id} [get]
 func GetUserByID(c *gin.Context) {
 	id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
@@ -113,7 +142,19 @@ func GetUserByID(c *gin.Context) {
 	})
 }
 
-// UpdateUser updates a user
+// UpdateUser godoc
+// @Summary Update a user by ID
+// @Description Update a user's name or email by their ID
+// @Tags users
+// @Accept json
+// @Produce json
+// @Param id path int true "User ID"
+// @Param user body models.UpdateUserRequest true "User update request"
+// @Success 200 {object} models.APIResponse
+// @Failure 400 {object} models.APIResponse
+// @Failure 404 {object} models.APIResponse
+// @Failure 409 {object} models.APIResponse
+// @Router /users/{id} [put]
 func UpdateUser(c *gin.Context) {
 	id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
@@ -145,12 +186,10 @@ func UpdateUser(c *gin.Context) {
 		return
 	}
 
-	// Update fields if provided
 	if req.Name != "" {
 		user.Name = req.Name
 	}
 	if req.Email != "" {
-		// Check if new email already exists
 		existingUser, exists := storage.GetUserByEmail(req.Email)
 		if exists && existingUser.ID != id {
 			c.JSON(http.StatusConflict, models.APIResponse{
@@ -164,7 +203,6 @@ func UpdateUser(c *gin.Context) {
 	}
 
 	user.UpdatedAt = time.Now()
-
 	storage.UpdateUser(id, user)
 
 	c.JSON(http.StatusOK, models.APIResponse{
@@ -174,7 +212,17 @@ func UpdateUser(c *gin.Context) {
 	})
 }
 
-// DeleteUser deletes a user
+// DeleteUser godoc
+// @Summary Delete a user by ID
+// @Description Delete a user from the system by ID
+// @Tags users
+// @Accept json
+// @Produce json
+// @Param id path int true "User ID"
+// @Success 200 {object} models.APIResponse
+// @Failure 400 {object} models.APIResponse
+// @Failure 404 {object} models.APIResponse
+// @Router /users/{id} [delete]
 func DeleteUser(c *gin.Context) {
 	id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
