@@ -26,6 +26,7 @@ func SetupRoutes(router *gin.Engine) {
 				"endpoints": gin.H{
 					"health": "/api/v1/health",
 					"users":  "/api/v1/users",
+					"auth":   "/api/v1/auth/login",
 				},
 			},
 		})

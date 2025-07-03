@@ -44,6 +44,41 @@ go get github.com/gin-contrib/cors   # For CORS support
 
 ---
 
+
+## Folder structure description
+### this is rule of folder structure
+```bash
+
+project/
+├── cmd/
+│   └── main.go
+├── config/
+│   └── config.go
+├── handlers/
+│   ├── auth.go          # Authentication handlers
+│   ├── health.go
+│   └── users.go
+├── middleware/
+│   ├── auth.go          # JWT authentication middleware
+│   └── cors.go
+├── models/
+│   ├── auth.go          # Auth request/response models
+│   ├── response.go
+│   └── users.go         # Renamed from usersmodel.go for consistency
+├── routes/
+│   └── routes.go
+├── storage/
+│   ├── interface.go     # New: Storage interface
+│   ├── memory.go
+│   └── postgres.go      # New: Database implementation (optional)
+├── utils/
+│   ├── jwt.go           # New: JWT utilities
+│   └── password.go      # New: Password hashing utilities
+├── .env
+├── go.mod
+└── go.sum
+```
+
 ##  Create a Complete REST API
 
 Create a `main.go` file:
@@ -139,6 +174,21 @@ You now have:
 * go mod init your-api  (use your project name)
 * go mod tidy (download dependencies)
 * go run main.go ( start the server)
+
+
+## password Auth (JWT token or Google auth)
+
+```bash
+## JWT
+* go get -u github.com/golang-jwt/jwt
+
+
+## google auth
+*go get golang.org/x/oauth2
+*go get golang.org/x/oauth2/google
+*go get github.com/gin-gonic/gin
+```
+
 
 
 # studying reference Page
